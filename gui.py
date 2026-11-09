@@ -5,6 +5,7 @@ from datetime import date, datetime
 
 from database.db import get_transactions
 from services.expense_manager import register_transaction
+from visualization.charts import show_charts_window
 
 
 class ExpenseTrackerApp:
@@ -133,6 +134,21 @@ class ExpenseTrackerApp:
             pady=11,
             cursor="hand2"
         ).pack(side="left")
+
+        tk.Button(
+            actions_frame,
+            text="Ver gráficos",
+            command=lambda: show_charts_window(self.root),
+            font=("Segoe UI", 10, "bold"),
+            bg="#315DA8",
+            fg="white",
+            activebackground="#24477F",
+            activeforeground="white",
+            relief="flat",
+            padx=20,
+            pady=11,
+            cursor="hand2"
+        ).pack(side="left", padx=(10, 0))
 
         # Historial
         tk.Label(
