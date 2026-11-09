@@ -1,12 +1,13 @@
-
-from datetime import date
+from datetime import date, datetime
 
 from database.db import (
     add_transaction,
     get_transactions,
     get_summary,
-    delete_transaction
+    delete_transaction,
+    get_transactions_by_date
 )
+
 
 
 def register_transaction(transaction_type, category, description, amount):
@@ -113,3 +114,46 @@ def remove_transaction():
 
     else:
         print("Eliminación cancelada.")
+
+def filter_transactions_by_date():
+
+    print("\n--- FILTRAR MOVIMIENTOS POR FECHAS ---")
+    print("Formato de fecha: AAAA-MM-DD")
+    
+    try:
+        start_date = input("Introduce la fecha inicial: ").strip()
+        datetime.strptime(start_date, "%Y-%m-%d")
+
+        end_date = input("Introduce la fecha final: ").strip()
+        datetime.strptime(end_date, "%Y-%m-%d")
+
+    except ValueError:
+        print("Error: introduce fechas válidas con formato AAAA-MM-DD.")
+        return
+
+    if start_date > end_date:
+        print("Error: la fecha inicial no puede ser posterior a la fecha final.")
+        return
+
+    transactions = get_transactions_by_date(start_date, end_date)
+
+    if not transactions:
+        print("No hay movimientos registrados en ese periodo.")
+        return
+
+    print("\n--- RESULTADOS DE LA BÚSQUEDA ---")
+
+    for transaction in transactions:
+
+        transaction_id, transaction_date, transaction_type, category, description, amount = transaction
+
+        print(
+            f"ID: {transaction_id} | "
+            f"Fecha: {transaction_date} | "
+            f"Tipo: {transaction_type} | "
+            f"Categoría: {category} | "
+            f"Descripción: {description} | "
+            f"Importe: {amount:.2f} €"
+        )
+
+    print(f"\nTotal de movimientos encontrados: {len(transactions)}")

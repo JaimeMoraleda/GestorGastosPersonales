@@ -119,3 +119,19 @@ def delete_transaction(transaction_id):
     connection.close()
 
     return deleted_rows
+
+def get_transactions_by_date(start_date, end_date):
+    connection = connect()
+    cursor = connection.cursor()
+
+    cursor.execute("""
+        SELECT *
+        FROM transactions
+        WHERE date BETWEEN ? AND ?
+        ORDER BY date DESC, id DESC
+    """, (start_date, end_date))
+
+    transactions = cursor.fetchall()
+    connection.close()
+
+    return transactions

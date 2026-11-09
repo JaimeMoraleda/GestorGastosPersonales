@@ -1,12 +1,15 @@
 
 from database.db import initialize_database
 
+
 from services.expense_manager import (
     register_transaction,
     show_transactions,
     calculate_balance,
-    remove_transaction
+    remove_transaction,
+    filter_transactions_by_date
 )
+
 
 
 from visualization.charts import show_expenses_chart
@@ -24,6 +27,7 @@ def show_menu():
     print("4. Consultar balance")
     print("5. Mostrar gráfico de gastos")
     print("6. Eliminar movimiento")
+    print("7. Filtrar movimientos por fechas")
     print("0. Salir")
 
 
@@ -98,6 +102,10 @@ def main():
 
             show_transactions()
             remove_transaction()
+
+        elif option == "7":
+
+            filter_transactions_by_date()
             
         elif option == "0":
 
