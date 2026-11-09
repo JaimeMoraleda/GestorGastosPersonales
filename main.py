@@ -1,124 +1,19 @@
 
+import tkinter as tk
+
 from database.db import initialize_database
-
-from services.expense_manager import (
-    register_transaction,
-    show_transactions,
-    calculate_balance,
-    remove_transaction,
-    filter_transactions_by_date,
-    show_monthly_report
-)
-
-
-
-from visualization.charts import show_expenses_chart
-
-
-def show_menu():
-
-    print("\n==============================")
-    print("     PERSONAL EXPENSE TRACKER")
-    print("==============================")
-
-    print("1. Registrar ingreso")
-    print("2. Registrar gasto")
-    print("3. Consultar movimientos")
-    print("4. Consultar balance")
-    print("5. Mostrar gráfico de gastos")
-    print("6. Eliminar movimiento")
-    print("7. Filtrar movimientos por fechas")
-    print("8. Consultar informe mensual")
-    print("0. Salir")
-
-
-def get_amount():
-
-    while True:
-
-        try:
-            amount = float(
-                input("Introduce el importe: ").replace(",", ".")
-            )
-
-            if amount <= 0:
-                print("El importe debe ser mayor que cero.")
-                continue
-
-            return amount
-
-        except ValueError:
-            print("Introduce un importe numérico válido.")
+from gui import ExpenseTrackerApp
 
 
 def main():
 
     initialize_database()
 
-    while True:
+    root = tk.Tk()
 
-        show_menu()
+    app = ExpenseTrackerApp(root)
 
-        option = input("\nSelecciona una opción: ")
-
-        if option == "1":
-
-            amount = get_amount()
-            category = input("Categoría del ingreso: ")
-            description = input("Descripción: ")
-
-            register_transaction(
-                "income",
-                category,
-                description,
-                amount
-            )
-
-        elif option == "2":
-
-            amount = get_amount()
-            category = input("Categoría del gasto: ")
-            description = input("Descripción: ")
-
-            register_transaction(
-                "expense",
-                category,
-                description,
-                amount
-            )
-
-        elif option == "3":
-
-            show_transactions()
-
-        elif option == "4":
-
-            calculate_balance()
-
-        elif option == "5":
-
-            show_expenses_chart()
-
-        elif option == "6":
-
-            show_transactions()
-            remove_transaction()
-
-        elif option == "7":
-
-            filter_transactions_by_date()
-
-        elif option == "8":
-            show_monthly_report()
-
-        elif option == "0":
-
-            print("Gracias por utilizar Personal Expense Tracker.")
-            break
-
-        else:
-
-            print("Opción no válida. Inténtalo de nuevo.")
+    root.mainloop()
 
 
 if __name__ == "__main__":
