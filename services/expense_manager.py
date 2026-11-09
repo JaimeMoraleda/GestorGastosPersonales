@@ -1,3 +1,4 @@
+import calendar
 from datetime import date, datetime
 
 from database.db import (
@@ -7,7 +8,6 @@ from database.db import (
     delete_transaction,
     get_transactions_by_date
 )
-
 
 
 def register_transaction(transaction_type, category, description, amount):
@@ -157,3 +157,78 @@ def filter_transactions_by_date():
         )
 
     print(f"\nTotal de movimientos encontrados: {len(transactions)}")
+def show_monthly_report():
+
+    print("\n--- INFORME MENSUAL ---")
+
+    try:
+        year = int(input("Introduce el año (ej. 2026): "))
+        month = int(input("Introduce el mes (1-12): "))
+
+        if month < 1 or month > 12:
+            print("Error: el mes debe estar entre 1 y 12.")
+            return
+
+        # Comprobamos que el año y el mes son válidos.
+        datetime(year, month, 1)
+
+    except ValueError:
+        print("Error: introduce un año y un mes válidos.")
+        return
+
+    # Calculamos el primer y último día del mes.
+    last_day = calendar.monthrange(year, month)[1]
+
+    start_date = f"{year}-{month:02d}-01"
+    end_date = f"{year}-{month:02d}-{last_day:02d}"
+
+    transactions = get_transactions_by_date(start_date, end_date)
+
+    if not transactions:
+        print("No hay movimientos registrados en ese mes.")
+        return
+
+    total_income = 0
+    total_expenses = 0
+    expenses_by_category = {}
+
+    for transaction in transactions:
+
+        transaction_type = transaction[2]
+        category = transaction[3]
+        amount = transaction[5]
+
+        if transaction_type == "income":
+            total_income += amount
+
+        elif transaction_type == "expense":
+            total_expenses += amount
+
+            if category not in expenses_by_category:
+                expenses_by_category[category] = 0
+
+            expenses_by_category[category] += amount
+
+    balance = total_income - total_expenses
+
+    print(f"\n--- INFORME DE {month:02d}/{year} ---")
+
+    print(f"Ingresos: {total_income:.2f} €")
+    print(f"Gastos: {total_expenses:.2f} €")
+    print(f"Ahorro: {balance:.2f} €")
+
+    print("\n--- GASTOS POR CATEGORÍA ---")
+
+    if expenses_by_category:
+
+        for category, amount in sorted(
+            expenses_by_category.items(),
+            key=lambda item: item[1],
+            reverse=True
+        ):
+            print(f"{category}: {amount:.2f} €")
+
+    else:
+        print("No hay gastos registrados.")
+
+    print(f"\nTotal de movimientos: {len(transactions)}")

@@ -1,13 +1,13 @@
 
 from database.db import initialize_database
 
-
 from services.expense_manager import (
     register_transaction,
     show_transactions,
     calculate_balance,
     remove_transaction,
-    filter_transactions_by_date
+    filter_transactions_by_date,
+    show_monthly_report
 )
 
 
@@ -28,6 +28,7 @@ def show_menu():
     print("5. Mostrar gráfico de gastos")
     print("6. Eliminar movimiento")
     print("7. Filtrar movimientos por fechas")
+    print("8. Consultar informe mensual")
     print("0. Salir")
 
 
@@ -106,7 +107,10 @@ def main():
         elif option == "7":
 
             filter_transactions_by_date()
-            
+
+        elif option == "8":
+            show_monthly_report()
+
         elif option == "0":
 
             print("Gracias por utilizar Personal Expense Tracker.")
