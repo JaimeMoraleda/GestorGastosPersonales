@@ -1,83 +1,99 @@
+# Gestor de Gastos Personales
 
-# Personal Expense Tracker
+Aplicación desarrollada en Python para gestionar ingresos y gastos personales, controlar el ahorro y analizar los hábitos financieros mediante estadísticas y gráficos.
 
-A Python application to manage personal income and expenses, track savings and visualize spending habits.
+## Características principales
 
-## Features
+- **Registro de movimientos:** permite registrar ingresos y gastos indicando categoría, descripción e importe.
+- **Historial de movimientos:** consulta todos los movimientos registrados.
+- **Balance financiero:** calcula los ingresos totales, los gastos y el ahorro acumulado.
+- **Eliminación de movimientos:** permite eliminar operaciones mediante su identificador.
+- **Filtros por fechas:** consulta los movimientos dentro de un periodo determinado.
+- **Informes mensuales:** muestra los ingresos, gastos, ahorro y distribución de gastos por categoría de un mes concreto.
+- **Visualización gráfica:** representa los gastos por categoría mediante gráficos.
 
-- Register income and expenses.
-- Organize transactions by categories.
-- Store financial data using SQLite.
-- View transaction history.
-- Calculate total income, expenses and net savings.
-- Visualize expenses using Matplotlib.
+## Tecnologías utilizadas
 
-## Technologies
-
-- Python 3
+- Python
 - SQLite
 - Matplotlib
 
-## Project Structure
+## Estructura del proyecto
 
 ```text
-PersonalExpenseTracker/
+GestorGastosPersonales/
+│
 ├── database/
-│   ├── db.py
-│   └── __init__.py
+│   ├── __init__.py
+│   └── db.py
+│
 ├── services/
-│   ├── expense_manager.py
-│   └── __init__.py
+│   ├── __init__.py
+│   └── expense_manager.py
+│
 ├── visualization/
-│   ├── charts.py
-│   └── __init__.py
+│   ├── __init__.py
+│   └── charts.py
+│
 ├── data/
+│
 ├── main.py
 ├── requirements.txt
 ├── README.md
 └── .gitignore
 ```
 
-## Installation
+## Instalación y ejecución
 
-1. Clone the repository.
-2. Create a virtual environment:
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/JaimeMoraleda/GestorGastosPersonales.git
+```
+
+### 2. Acceder a la carpeta del proyecto
+
+```bash
+cd GestorGastosPersonales
+```
+
+### 3. Crear un entorno virtual
 
 ```bash
 python -m venv venv
 ```
 
-3. Activate it on Windows:
+### 4. Instalar las dependencias
+
+En Windows, ejecuta:
 
 ```powershell
-.\venv\Scripts\Activate.ps1
+.\venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-4. Install dependencies:
+### 5. Ejecutar la aplicación
 
-```bash
-pip install -r requirements.txt
+```powershell
+.\venv\Scripts\python.exe main.py
 ```
 
-## Usage
+## Base de datos
 
-Run the application:
+La aplicación utiliza SQLite para almacenar los movimientos financieros en una base de datos local.
 
-```bash
-python main.py
-```
+La base de datos se inicializa automáticamente al ejecutar la aplicación por primera vez.
 
-Follow the terminal menu to manage your personal finances.
+Cada movimiento almacena:
 
-## Future Improvements
+- Identificador.
+- Fecha.
+- Tipo de movimiento (ingreso o gasto).
+- Categoría.
+- Descripción.
+- Importe.
 
-- Monthly financial reports.
-- Custom category management.
-- Transaction editing and deletion.
-- Expense limits and budgets.
-- Unit testing with pytest.
-- Graphical user interface.
+## Objetivo del proyecto
 
-## Author
+Este proyecto tiene como objetivo desarrollar una aplicación práctica utilizando Python, aplicando conceptos de programación, gestión de bases de datos, organización del código mediante módulos y visualización de datos.
 
-Jaime Moraleda
+Además, forma parte de mi aprendizaje y desarrollo de proyectos personales para mejorar mis habilidades de programación.
